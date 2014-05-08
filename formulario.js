@@ -2,19 +2,26 @@ var $form = $('#formulario'),
 	$titulo = $('#titulo'),
 	$url = $('#url'),
 	$button = $('#mostrar-form'),
+	$primerPost = $('.item').first();
 	$list = $('#contenido'),
-	$post = $('.item').first();
 
+if (localStorage.getItem('autosave'))
+{
+	$titulo.val(sessionStorage.getItem('titulo'));
+	$url.val(sessionStorage.getItem('url'));
 
-function mostrarFormulario(){
+}
+
+function mostrarOcultarFormulario(){
 	$form.slideToggle();
+	$lita.slideToggle();
 	return false;
 }
 
 function agregarPost(){
-	var url = $url.val(),
-		titulo = $titulo.val(),
-		$clone = $post.clone();
+	var titulo = $titulo.val(),
+		url = $url.val(),
+		$clone = $primerPost.clone();
 
 	$clone.find('.titulo_item a')
 		.text(titulo)
@@ -22,13 +29,14 @@ function agregarPost(){
 
 	$clone.hide();
 
-	$list.prepend($clone);
-
+	$list.prepend($clone)
+	$mostrarOcultarFormulario();
+	$titulo.val('');
+	$url.val('');
 	$clone.fadeIn();
-
 	return false;
 }
 
 // Eventos
-$button.click( mostrarFormulario );
+$button.click( mostrarOcultarFormulario );
 $form.on('submit', agregarPost );
